@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
+          name="viewport">
+    <meta content="ie=edge" http-equiv="X-UA-Compatible">
+    <link href="css/style.css" rel="stylesheet">
+    <title>Filters</title>
+</head>
+<body>
+<main class="main">
+    <aside class="sidebar">
+        <section class="sidebar__active-filters">
+            
+        </section>
+        <section class="sidebar__tag">
+            <h3 class="sidebar__title">Select a filter</h3>
+            <div class="sidebar__filters">
+                <a class="sidebar__filter" data-tag="isDiscount" data-type="filter" href="#">Discount</a>
+                <a class="sidebar__filter" data-tag="isBroken" data-type="filter" href="#">Broken</a>
+            </div>
+        </section>
+        <section class="sidebar__price">
+            <h3 class="sidebar__title">Select price</h3>
+            <form action="" class="sidebar__price-filter">
+                <input class="sidebar__input" data-tag="price" data-type="price" name="from" placeholder="From"
+                       type="number">
+                <span class="sidebar__slash">-</span>
+                <input class="sidebar__input" data-tag="price" data-type="price" name="to" placeholder="To"
+                       type="number">
+                <button class="sidebar__button-form">OK</button>
+            </form>
+        </section>
+    </aside>
+    <div class="catalog">
+        <h1 class="catalog__title">Assortments</h1>
+        <div class="catalog__products">
+
+        </div>
+    </div>
+</main>
+<script src="index.js"></script>
+</body>
+</html>
