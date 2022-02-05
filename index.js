@@ -178,7 +178,7 @@ function renderFilters() {
 
     render(activeGoods);
 }
-
+//Artur
 activeFiltersBar.addEventListener("click", (event) => {
     const target = event.target;
     if (target.tagName === "SPAN") {
