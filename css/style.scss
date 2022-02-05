@@ -1,0 +1,164 @@
+$color: #0065ad;
+* {
+  margin: 0;
+  padding: 0;
+  text-decoration: none;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+a {
+  color: #000;
+}
+
+.main {
+  display: flex;
+}
+
+section {
+  margin-bottom: 15px;
+}
+
+.sidebar {
+  border-right: 1px solid rgba(148, 148, 148, .7);
+  height: 100vh;
+  padding: 15px 15px;
+  max-width: 250px;
+
+  &__active-filter {
+    border: 1px solid $color;
+    border-radius: 15px;
+    padding: 5px 10px;
+    cursor: default;
+
+    &:hover {
+      background-color: $color;
+      transition: .5s;
+    }
+  }
+
+  &__active-close {
+    cursor: pointer;
+  }
+
+  &__filers {
+    display: flex;
+    padding-right: 10px;
+  }
+
+  &__title {
+    margin-bottom: 10px;
+  }
+
+  &__filter {
+    border: 2px solid transparent;
+    background: linear-gradient(#fff, #fff) padding-box,
+    linear-gradient(to right, rgba(2, 0, 36, 1), rgba(0, 212, 255, 1)) border-box;
+    border-radius: 15px;
+    padding: 4px 7px;
+
+  }
+
+  &__price-filter {
+    display: flex;
+    align-items: center;
+  }
+
+  &__input {
+    max-width: 70px;
+    padding: 5px;
+    border-radius: 3px;
+    border: 1px solid rgba(148, 148, 148, .7);
+    transition: .5s;
+
+    &:hover {
+      border: 1px solid rgb(148, 148, 148);
+    }
+  }
+
+  &__slash {
+    margin: 0 5px;
+  }
+
+  &__button-form {
+    padding: 5px 10px;
+    border: 1px solid rgba(148, 148, 148, .7);
+    border-radius: 3px;
+    margin-left: 10px;
+  }
+}
+
+
+//Catalog
+.catalog {
+  padding: 15px 0;
+
+  &__title {
+    padding-left: 15px;
+  }
+
+  &__products {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+  }
+
+  &__product {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    max-width: 250px;
+    padding: 10px;
+    border: 1px solid rgba(148, 148, 148, .7);
+    margin-top: -1px;
+    margin-left: -1px;
+  }
+
+  &__product-content {
+    height: 200px;
+    position: relative;
+
+  }
+
+  &__product-image {
+    width: 100%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  &__product-title {
+    margin-top: 15px;
+    height: 110px;
+  }
+
+  &__product-rating {
+    margin-top: 5px;
+  }
+
+  &__product-price {
+    font-size: 20px;
+    margin-top: 5px;
+  }
+}
+
+.c-icon {
+  fill: #6c6962;
+}
+
+.c-icon.active {
+  fill: #fece3c;
+}
+
+.price-through {
+  text-decoration: line-through;
+  font-size: 16px;
+  opacity: .7;
+}
+
+.price-hot {
+  color: red;
+}
+
+
+
