@@ -24,12 +24,17 @@ section {
   height: 100vh;
   padding: 15px 15px;
   max-width: 250px;
-
+  &__active-filters{
+    display: flex;
+    flex-wrap: wrap;
+  }
   &__active-filter {
     border: 1px solid $color;
     border-radius: 15px;
     padding: 5px 10px;
     cursor: default;
+    margin-right: 5px;
+    margin-bottom: 5px;
 
     &:hover {
       background-color: $color;

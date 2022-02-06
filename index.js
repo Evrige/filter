@@ -92,12 +92,14 @@ const goods = [
 ];
 const divProducts = document.getElementsByClassName("catalog__products")[0];
 const activeFiltersBar = document.getElementsByClassName("sidebar__active-filters")[0];
+const sidebar = document.getElementsByClassName("sidebar")[0];
 
 render();
 
 let activefilters = [];
 let activeGoods = [];
 
+//Function to render goods
 function render(array = goods) {
     array.forEach((item) => {
         const renderItem = document.createElement("div");
@@ -136,12 +138,12 @@ function render(array = goods) {
         divProducts.append(renderItem);
     });
 }
-
+//function to render rating goods
 function changeRating(elem, count) {
     if (Math.ceil(elem.rating) >= count) return "active";
     return "";
 }
-
+//price selection
 function takePrice(item) {
     if (item.isDiscount) return `
         <span class="catalog__product-price price-through">${item.price}₴</span>
@@ -151,12 +153,14 @@ function takePrice(item) {
          <span class="catalog__product-price">${item.price}₴</span>
     `;
 }
-
+//Clear goods DOM
 function clearList() {
     divProducts.innerHTML = "";
 }
-
-function renderFilters() {
+//Render goods by filter
+function renderFilters(qualifiedName, value) {
+    //removing repetitions
+    activefilters = [...new Set(activefilters)];
     clearList();
     activeGoods = goods;
     //clear active filters name in DOM
@@ -164,21 +168,61 @@ function renderFilters() {
 
     if (activefilters.length !== 0) {
         activefilters.forEach((filter) => {
-            //render active filter in DOM
             const renderFilter = document.createElement("a");
-            renderFilter.innerHTML = `
-             <a class="sidebar__active-filter" data-name=${filter} href="#">${filter.slice(2)} <span class="sidebar__active-close">&#10006;</span></a>
-        `;
-            activeFiltersBar.append(renderFilter);
+            renderFilter.classList.add("sidebar__active-filter");
+            renderFilter.setAttribute(`data-name`, filter);
+            renderFilter.setAttribute(`href`, "#");
+            const formPrice = document.getElementsByClassName("sidebar__price-filter")[0];
+            const priceFrom = Number(formPrice.from.value);
+            const priceTo = Number(formPrice.to.value);
+            //render price filter
+            if(filter === "price"){
+                if(isValidForm()){
+                    activeGoods = activeGoods.filter((item)=> {
+                        if(item.newPrice) return item.newPrice>=priceFrom && item.newPrice<=priceTo;
+                        return item.price>=priceFrom && item.price<=priceTo;
+                    });
 
-            //Create array with filtration
+                    //render active filter in DOM
+                    renderFilter.innerHTML = `
+                     ${priceFrom}-${priceTo} <span class="sidebar__active-close">&#10006;</span>
+                 `;
+                    activeFiltersBar.append(renderFilter);
+                }
+
+            }
+            else{
+                //render active filter in DOM
+                renderFilter.innerHTML = `
+                     ${filter.slice(2)} <span class="sidebar__active-close">&#10006;</span>
+                 `;
+                activeFiltersBar.append(renderFilter);
+            }
+
+            //Create array goods with filtration
             activeGoods = activeGoods.filter((item => item[filter]));
+            //Check validation input form to filter price
+            function isValidForm(){
+                if(typeof priceFrom === "number" && typeof priceTo === "number" && priceFrom!==0 && priceTo!==0){
+                    formPrice.from.value = "";
+                    formPrice.to.value = "";
+                    formPrice.from.classList.remove("error-line");
+                    formPrice.to.classList.remove("error-line");
+
+                    return true;
+                }
+                else{
+                    if(typeof priceFrom !== "number" && priceFrom!==0) formPrice.from.classList.add("error-line");
+                    if(typeof priceTo !== "number" && priceTo!==0) formPrice.to.classList.add("error-line");
+                }
+            }
         });
     }
-
+    //render active goods in DOM
     render(activeGoods);
 }
-//Artur
+
+//Remove filter from active
 activeFiltersBar.addEventListener("click", (event) => {
     const target = event.target;
     if (target.tagName === "SPAN") {
@@ -192,20 +236,21 @@ activeFiltersBar.addEventListener("click", (event) => {
         }
     }
 })
-
-const sidebar = document.getElementsByClassName("sidebar")[0];
-
+//Check click on filter
 sidebar.addEventListener("click", (event) => {
     const target = event.target;
-
-    if (target.tagName === "A") {
+    event.preventDefault();
+    if (target.tagName === "A" || target.tagName === "BUTTON") {
         const type = target.getAttribute("data-type");
         const value = target.getAttribute("data-tag");
 
         switch (type) {
             case "filter":
                 activefilters.push(value);
-                activefilters = [...new Set(activefilters)];
+                renderFilters();
+                break;
+            case "price":
+                activefilters.push("price");
                 renderFilters();
                 break;
             default:

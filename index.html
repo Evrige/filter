@@ -12,7 +12,6 @@
 <main class="main">
     <aside class="sidebar">
         <section class="sidebar__active-filters">
-            
         </section>
         <section class="sidebar__tag">
             <h3 class="sidebar__title">Select a filter</h3>
@@ -24,12 +23,12 @@
         <section class="sidebar__price">
             <h3 class="sidebar__title">Select price</h3>
             <form action="" class="sidebar__price-filter">
-                <input class="sidebar__input" data-tag="price" data-type="price" name="from" placeholder="From"
+                <input class="sidebar__input" data-tag="from" name="from" placeholder="From"
                        type="number">
                 <span class="sidebar__slash">-</span>
-                <input class="sidebar__input" data-tag="price" data-type="price" name="to" placeholder="To"
+                <input class="sidebar__input" data-tag="to" name="to" placeholder="To"
                        type="number">
-                <button class="sidebar__button-form">OK</button>
+                <button class="sidebar__button-form" data-type="price">OK</button>
             </form>
         </section>
     </aside>
