@@ -93,12 +93,12 @@ const goods = [
 const divProducts = document.getElementsByClassName("catalog__products")[0];
 const activeFiltersBar = document.getElementsByClassName("sidebar__active-filters")[0];
 const sidebar = document.getElementsByClassName("sidebar")[0];
-
+const formPrice = document.getElementsByClassName("sidebar__price-filter")[0];
 render();
 
 let activefilters = [];
 let activeGoods = [];
-
+let priceArray= [];
 //Function to render goods
 function render(array = goods) {
     array.forEach((item) => {
@@ -157,71 +157,57 @@ function takePrice(item) {
 function clearList() {
     divProducts.innerHTML = "";
 }
-//Render goods by filter
-function renderFilters(qualifiedName, value) {
-    //removing repetitions
-    activefilters = [...new Set(activefilters)];
-    clearList();
-    activeGoods = goods;
-    //clear active filters name in DOM
-    activeFiltersBar.innerHTML = "";
+//add filter name in DOM
+function addFilters(filterName) {
+    activefilters.push(filterName);
 
-    if (activefilters.length !== 0) {
-        activefilters.forEach((filter) => {
-            const renderFilter = document.createElement("a");
-            renderFilter.classList.add("sidebar__active-filter");
-            renderFilter.setAttribute(`data-name`, filter);
-            renderFilter.setAttribute(`href`, "#");
-            const formPrice = document.getElementsByClassName("sidebar__price-filter")[0];
-            const priceFrom = Number(formPrice.from.value);
-            const priceTo = Number(formPrice.to.value);
-            //render price filter
-            if(filter === "price"){
-                if(isValidForm()){
-                    activeGoods = activeGoods.filter((item)=> {
-                        if(item.newPrice) return item.newPrice>=priceFrom && item.newPrice<=priceTo;
-                        return item.price>=priceFrom && item.price<=priceTo;
-                    });
+    const renderFilter = document.createElement("a");
+    renderFilter.classList.add("sidebar__active-filter", `${filterName}`);
+    renderFilter.setAttribute(`data-name`, filterName);
+    renderFilter.setAttribute(`href`, "#");
+    renderFilter.innerHTML = `
+         ${filterForRender()} <span class="sidebar__active-close">&#10006;</span>
+         `;
+    activeFiltersBar.append(renderFilter);
 
-                    //render active filter in DOM
-                    renderFilter.innerHTML = `
-                     ${priceFrom}-${priceTo} <span class="sidebar__active-close">&#10006;</span>
-                 `;
-                    activeFiltersBar.append(renderFilter);
-                }
-
-            }
-            else{
-                //render active filter in DOM
-                renderFilter.innerHTML = `
-                     ${filter.slice(2)} <span class="sidebar__active-close">&#10006;</span>
-                 `;
-                activeFiltersBar.append(renderFilter);
-            }
-
-            //Create array goods with filtration
-            activeGoods = activeGoods.filter((item => item[filter]));
-            //Check validation input form to filter price
-            function isValidForm(){
-                if(typeof priceFrom === "number" && typeof priceTo === "number" && priceFrom!==0 && priceTo!==0){
-                    formPrice.from.value = "";
-                    formPrice.to.value = "";
-                    formPrice.from.classList.remove("error-line");
-                    formPrice.to.classList.remove("error-line");
-
-                    return true;
-                }
-                else{
-                    if(typeof priceFrom !== "number" && priceFrom!==0) formPrice.from.classList.add("error-line");
-                    if(typeof priceTo !== "number" && priceTo!==0) formPrice.to.classList.add("error-line");
-                }
-            }
-        });
+    //function for render active goods
+    renderActiveGoods();
+    //What filter to render
+    function filterForRender() {
+        const priceFrom = Number(formPrice.from.value);
+        const priceTo = Number(formPrice.to.value);
+        if(filterName=== "price") return `${priceFrom}-${priceTo}`;
+        else return filterName.slice(2);
     }
-    //render active goods in DOM
-    render(activeGoods);
 }
 
+
+//Function for render goods after filtration
+function renderActiveGoods() {
+    clearList();
+    activeGoods = goods;
+    let priceFrom = Number(formPrice.from.value);
+    let priceTo = Number(formPrice.to.value);
+    if(priceFrom===0) priceFrom = priceArray[0];
+    if(priceTo===0) priceTo = priceArray[1];
+    console.log(priceFrom, priceTo)
+    //Create array goods with filtration
+    activefilters.forEach((filter)=>{
+        activeGoods = activeGoods.filter((item => item[filter]));
+        if(filter === "price") {
+            if (isValidForm(priceFrom, priceTo)) {
+                priceArray.push(priceFrom, priceTo);
+                  return activeGoods = activeGoods.filter((item) => {
+                    if (item.newPrice) return item.newPrice >= priceFrom && item.newPrice <= priceTo;
+                    else return item.price >= priceFrom && item.price <= priceTo;
+                });
+            }
+        }
+
+    })
+    // render active goods in DOM
+    render(activeGoods);
+}
 //Remove filter from active
 activeFiltersBar.addEventListener("click", (event) => {
     const target = event.target;
@@ -232,7 +218,7 @@ activeFiltersBar.addEventListener("click", (event) => {
         if (activefilters.includes(nameFilter)) {
             const index = activefilters.indexOf(nameFilter);
             activefilters.splice(index, 1);
-            renderFilters();
+            renderActiveGoods();
         }
     }
 })
@@ -246,15 +232,41 @@ sidebar.addEventListener("click", (event) => {
 
         switch (type) {
             case "filter":
-                activefilters.push(value);
-                renderFilters();
+                if (validActiveFilters(value)){
+                    addFilters(value);
+                }
                 break;
             case "price":
-                activefilters.push("price");
-                renderFilters();
+                validActiveFilters("price");
+                addFilters("price");
                 break;
             default:
                 break;
         }
     }
 });
+function validActiveFilters(valueFilter) {
+    if(activefilters.includes(valueFilter) && valueFilter==="price"){
+        const price = document.getElementsByClassName("price")[0];
+        price.remove();
+        const index = activefilters.indexOf("price");
+        activefilters.splice(index, 1);
+    }
+    if(!activefilters.includes(valueFilter)) return true;
+}
+
+//Check validation input form to filter price
+function isValidForm(priceFrom, priceTo){
+    if(typeof priceFrom === "number" && typeof priceTo === "number" && priceFrom > 0 && priceTo > 0 && priceFrom <= priceTo){
+        formPrice.from.value = "";
+        formPrice.to.value = "";
+        formPrice.from.classList.remove("error-line");
+        formPrice.to.classList.remove("error-line");
+
+        return true;
+    }
+    else{
+        if(typeof priceFrom !== "number" || priceFrom<=0 || priceFrom>=priceTo) formPrice.from.classList.add("error-line");
+        if(typeof priceTo !== "number" || priceTo<=0 || priceFrom>=priceTo) formPrice.to.classList.add("error-line");
+    }
+}

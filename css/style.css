@@ -1,144 +1,148 @@
 * {
-    margin: 0;
-    padding: 0;
-    text-decoration: none;
-    box-sizing: border-box;
-    font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  text-decoration: none;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
 }
 
 a {
-    color: #000;
+  color: #000;
 }
 
 .main {
-    display: flex;
+  display: flex;
 }
 
 section {
-    margin-bottom: 15px;
+  margin-bottom: 15px;
 }
 
 .sidebar {
-    border-right: 1px solid rgba(148, 148, 148, 0.7);
-    height: 100vh;
-    padding: 15px 15px;
-    max-width: 250px;
+  border-right: 1px solid rgba(148, 148, 148, 0.7);
+  height: 100vh;
+  padding: 15px 15px;
+  max-width: 250px;
 }
 .sidebar__active-filters {
-    display: flex;
-    flex-wrap: wrap;
+  display: flex;
+  flex-wrap: wrap;
 }
 .sidebar__active-filter {
-    border: 1px solid #0065ad;
-    border-radius: 15px;
-    padding: 5px 10px;
-    cursor: default;
-    margin-right: 5px;
-    margin-bottom: 5px;
+  border: 1px solid #0065ad;
+  border-radius: 15px;
+  padding: 5px 10px;
+  cursor: default;
+  margin-right: 5px;
+  margin-bottom: 5px;
 }
 .sidebar__active-filter:hover {
-    background-color: #0065ad;
-    transition: 0.5s;
+  background-color: #0065ad;
+  transition: 0.5s;
 }
 .sidebar__active-close {
-    cursor: pointer;
+  cursor: pointer;
 }
 .sidebar__filers {
-    display: flex;
-    padding-right: 10px;
+  display: flex;
+  padding-right: 10px;
 }
 .sidebar__title {
-    margin-bottom: 10px;
+  margin-bottom: 10px;
 }
 .sidebar__filter {
-    border: 2px solid transparent;
-    background: linear-gradient(#fff, #fff) padding-box, linear-gradient(to right, #020024, #00d4ff) border-box;
-    border-radius: 15px;
-    padding: 4px 7px;
+  border: 2px solid transparent;
+  background: linear-gradient(#fff, #fff) padding-box, linear-gradient(to right, #020024, #00d4ff) border-box;
+  border-radius: 15px;
+  padding: 4px 7px;
 }
 .sidebar__price-filter {
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
 }
 .sidebar__input {
-    max-width: 70px;
-    padding: 5px;
-    border-radius: 3px;
-    border: 1px solid rgba(148, 148, 148, 0.7);
-    transition: 0.5s;
+  max-width: 70px;
+  padding: 5px;
+  border-radius: 3px;
+  border: 1px solid rgba(148, 148, 148, 0.7);
+  transition: 0.5s;
 }
 .sidebar__input:hover {
-    border: 1px solid #949494;
+  border: 1px solid #949494;
 }
 .sidebar__slash {
-    margin: 0 5px;
+  margin: 0 5px;
 }
 .sidebar__button-form {
-    padding: 5px 10px;
-    border: 1px solid rgba(148, 148, 148, 0.7);
-    border-radius: 3px;
-    margin-left: 10px;
+  padding: 5px 10px;
+  border: 1px solid rgba(148, 148, 148, 0.7);
+  border-radius: 3px;
+  margin-left: 10px;
 }
 
 .catalog {
-    padding: 15px 0;
+  padding: 15px 0;
 }
 .catalog__title {
-    padding-left: 15px;
+  padding-left: 15px;
 }
 .catalog__products {
-    display: grid;
-    grid-template-columns: repeat(6, 1fr);
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
 }
 .catalog__product {
-    display: flex;
-    flex-direction: column;
-    position: relative;
-    max-width: 250px;
-    padding: 10px;
-    border: 1px solid rgba(148, 148, 148, 0.7);
-    margin-top: -1px;
-    margin-left: -1px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  max-width: 250px;
+  padding: 10px;
+  border: 1px solid rgba(148, 148, 148, 0.7);
+  margin-top: -1px;
+  margin-left: -1px;
 }
 .catalog__product-content {
-    height: 200px;
-    position: relative;
+  height: 200px;
+  position: relative;
 }
 .catalog__product-image {
-    width: 100%;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+  width: 100%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 .catalog__product-title {
-    margin-top: 15px;
-    height: 110px;
+  margin-top: 15px;
+  height: 110px;
 }
 .catalog__product-rating {
-    margin-top: 5px;
+  margin-top: 5px;
 }
 .catalog__product-price {
-    font-size: 20px;
-    margin-top: 5px;
+  font-size: 20px;
+  margin-top: 5px;
 }
 
 .c-icon {
-    fill: #6c6962;
+  fill: #6c6962;
 }
 
 .c-icon.active {
-    fill: #fece3c;
+  fill: #fece3c;
 }
 
 .price-through {
-    text-decoration: line-through;
-    font-size: 16px;
-    opacity: 0.7;
+  text-decoration: line-through;
+  font-size: 16px;
+  opacity: 0.7;
 }
 
 .price-hot {
-    color: red;
+  color: red;
+}
+
+.error-line {
+  border: 1px solid red;
 }
 
 /*# sourceMappingURL=style.css.map */
